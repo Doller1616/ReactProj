@@ -1,0 +1,142 @@
+{
+    "data": {
+        "grossReport": {
+            "interpriseId": "Total",
+            "interpriseName": "Total",
+            "whatsAppNo": "9910600666",
+            "template": "Template 1",
+            "duration": "2021-02-10",
+            "notification": {
+                "submitted": "1200",
+                "read": "1070",
+                "uniqueUser": "23410"
+            },
+            "conversations": {
+                "requests": "3200",
+                "responsive": "2070",
+                "uniqueUser": "56000"
+            }
+        },
+        "reports": [
+            {
+                "interpriseId": "CarlsonSoft",
+                "interpriseName": "Carlson Soft",
+                "whatsAppNo": "9910600666",
+                "template": "Template 2",
+                "duration": "2021-02-10",
+                "notification": {
+                    "submitted": "1200",
+                    "read": "1070",
+                    "uniqueUser": "23410"
+                },
+                "conversations": {
+                    "requests": "3200",
+                    "responsive": "2070",
+                    "uniqueUser": "56000"
+                }
+            },
+            {
+                "interpriseId": "LensKart",
+                "interpriseName": "Lens Kart",
+                "whatsAppNo": "9910600666",
+                "template": "Template 3",
+                "duration": "2021-02-10",
+                "notification": {
+                    "submitted": "1200",
+                    "read": "1070",
+                    "uniqueUser": "23410"
+                },
+                "conversations": {
+                    "requests": "3200",
+                    "responsive": "2070",
+                    "uniqueUser": "56000"
+                }
+            },
+            {
+                "interpriseId": "MeeraSeeds",
+                "interpriseName": "Meera Seeds",
+                "whatsAppNo": "9910600666",
+                "template": "Template 4",
+                "duration": "2021-02-10",
+                "notification": {
+                    "submitted": "1200",
+                    "read": "1070",
+                    "uniqueUser": "23410"
+                },
+                "conversations": {
+                    "requests": "3200",
+                    "responsive": "2070",
+                    "uniqueUser": "56000"
+                }
+            },
+            {
+                "interpriseId": "MotoBag",
+                "interpriseName": "Moto Bag",
+                "whatsAppNo": "9910600666",
+                "template": "Template 5",
+                "duration": "2021-02-10",
+                "notification": {
+                    "submitted": "1200",
+                    "read": "1070",
+                    "uniqueUser": "23410"
+                },
+                "conversations": {
+                    "requests": "3200",
+                    "responsive": "2070",
+                    "uniqueUser": "56000"
+                }
+            },
+            {
+                "interpriseId": "SoftTech",
+                "interpriseName": "Soft Tech",
+                "whatsAppNo": "9910600666",
+                "template": "Template 1",
+                "duration": "2021-02-10",
+                "notification": {
+                    "submitted": "1200",
+                    "read": "1070",
+                    "uniqueUser": "23410"
+                },
+                "conversations": {
+                    "requests": "3200",
+                    "responsive": "2070",
+                    "uniqueUser": "56000"
+                }
+            },
+            {
+                "interpriseId": "ToyWorld",
+                "interpriseName": "Toy World",
+                "whatsAppNo": "9910600666",
+                "template": "Template 3",
+                "duration": "2021-02-10",
+                "notification": {
+                    "submitted": "1200",
+                    "read": "1070",
+                    "uniqueUser": "23410"
+                },
+                "conversations": {
+                    "requests": "3200",
+                    "responsive": "2070",
+                    "uniqueUser": "56000"
+                }
+            },
+            {
+                "interpriseId": "ZenTech",
+                "interpriseName": "Zen Tech",
+                "whatsAppNo": "9910600666",
+                "template": "Template 2",
+                "duration": "2021-02-10",
+                "notification": {
+                    "submitted": "1200",
+                    "read": "1070",
+                    "uniqueUser": "23410"
+                },
+                "conversations": {
+                    "requests": "3200",
+                    "responsive": "2070",
+                    "uniqueUser": "56000"
+                }
+            }
+        ]
+    }
+}

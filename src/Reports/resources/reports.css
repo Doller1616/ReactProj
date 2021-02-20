@@ -1,0 +1,161 @@
+
+.reportContainer{
+    padding: 25px 30px 10px 30px;
+}
+
+.breadcrum{
+text-align: left;
+letter-spacing: 0px;
+color: #0EB1D2;
+}
+
+.filterSection{
+background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 4px 10px #00000029;
+border-radius: 5px;
+padding:5px 5px 5px 10px; 
+}
+
+label{
+text-align: left;
+letter-spacing: 0px;
+color: #030303;
+font-weight: bold;
+font-size: 14px;
+}
+
+.searchBtn{
+font-size: 14px;
+margin-top: 2.0rem !important;
+}
+
+.durationSelect{
+    color: #000;
+    text-align: left;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 8px #00000029;
+    border: 1px solid #E1E1E1;
+    border-radius: 2px;
+}
+
+
+.interpriseIdSelect{
+    color: #000;
+    text-align: left;
+    width: 98%;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 8px #00000029;
+    border: 1px solid #E1E1E1;
+    border-radius: 2px;
+}
+
+.interpriseIdSelect:hover{
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #E1E1E1; 
+    color: #000;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle {
+    color: #000;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+.dropdown-header {
+    padding: 0.1rem .5em;
+}
+
+
+/* Grid */
+
+.gridContainer{
+background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 4px 10px #00000029;
+border-radius: 5px;
+}
+
+.table{
+    text-align: center;
+    
+}
+
+.table thead tr th {
+    text-align: center;
+    vertical-align: middle;
+
+    border : 1px solid #fff;
+    font-size: 14px;
+    color: #666666;
+    padding: 0.40rem;
+}
+
+.table tbody td{
+ padding: 0.40rem;
+ font-size: 14px;
+}
+
+td[colspan="7"]{
+    text-align: left;
+    padding: 20px;
+    font-size: 14px;
+} 
+
+@media (min-width: 768px){
+.col-md-3 {
+    flex: 0 0 16%;
+    max-width: 24%;
+}
+}
+
+.headers th {
+    background: #EEEEF0 0% 0% no-repeat padding-box;
+}
+
+.table tbody td {
+   border-width: 0 0 1px 0;
+}
+
+.totalCalcuRow{
+    background: #F6F7FB 0% 0% no-repeat padding-box;
+}
+
+.filterBy {
+  color: #0EB1D2;
+  font-weight: bold;
+}
+
+.form-control {
+    width: auto;
+}
+
+.pagi{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    
+    border-radius: 2px;
+    cursor: pointer;
+    padding: 2px;
+    margin: 1px;
+}
+
+.pagiActive{
+    color: #fff;
+    background: #0EB1D2 0% 0% no-repeat padding-box;
+}
+
+.pages{
+background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 4px 10px #00000029;
+border-radius: 5px;
+padding:5px;
+width: 250px;
+position: absolute;
+right: 15px;
+bottom: 7px;
+}
+

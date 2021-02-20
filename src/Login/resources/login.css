@@ -1,0 +1,66 @@
+.loginContainer{
+    margin: auto;
+    width: 450px;
+    height: 450px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 4px 10px #03030329;
+    color: #666666;
+    border-radius: 10px;
+    padding: 10px 30px 40px 30px;
+
+}
+
+.loginForm{
+   padding: 40px 30px;
+}
+
+.loginTitle{
+    margin: auto;
+    text-align: center;
+    color: #666666;
+}
+
+label{
+font-size: 20px;
+text-align: left;
+letter-spacing: 0px;
+color: #707070;
+}
+
+.input[type=text]{
+height: 54px;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 4px 20px #0000000D;
+border: 1px solid #268CDC;
+border-radius: 4px;
+}
+
+.reme4getPwd{
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px !important;
+    position: relative;
+}
+
+.reme4getPwd span {
+    position: absolute;
+    top:-2px;
+} 
+
+input[type=radio] {
+    width: 18px;
+    height: 18px;
+  }
+
+.forgetPwd{
+font: normal normal 600 16px/22px Open Sans;
+letter-spacing: 0px;
+color: #268CDC;
+
+}
+
+.loginBtn {
+width: 99%;
+font-size: 24px;
+}
+
