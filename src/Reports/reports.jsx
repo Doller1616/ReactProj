@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Label, Row, Table } from 'reactstrap'
+import {
+    Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle,FormGroup, Input, Label, Row, Table} from 'reactstrap'
 import { CreateDDItem } from './resources/helpers/createDDItem'
 import './resources/reports.css'
 import { ReportsService } from './service/reportsService'
-import { filterDDItems } from './resources/helpers/filterDDItems'
+import { filterDDItems, filterGrid, getCurrentData } from './resources/helpers/filters'
 import { ActivePage } from './resources/helpers/pagination'
 import { GrossModel } from './models/grossModel'
 import { ReportsModel } from './models/reportsModel'
@@ -11,22 +12,22 @@ import { CreateRows4Grid } from './resources/helpers/createRows4Grid'
 
 export class ReportPage extends Component {
 
-    interpriseData = []
-    whatsAppNoData = []
-    templateNameData = []
     reportsData = []
 
     state = {
+        interpriseData: [],
         interpriseDD: false,
         interpriseValue: "All",
 
+        whatsAppNoData: [],
         whatsAppNoDD: false,
         whatsAppNoValue: "All",
 
+        templateNameData: [],
         templateNameDD: false,
         templateNameValue: "All",
 
-        durationValue: "",
+        durationValue: getCurrentData(),
         displayNoOfrows: "5",
 
         // Hide and show elements
@@ -34,74 +35,65 @@ export class ReportPage extends Component {
         templateNameCol: true,
 
         //Report Data
-        grossDataArr : [],
-        reportDataRows : []
+        grossDataArr: [],
+        reportDataRows: []
     }
 
     constructor() {
         super()
     }
 
-    componentDidMount(){
-    // Initilization
-    this.getWhatsNoData();
-    this.getTemplateNameData();
-    this.getInterpriseIdData();
-    this.getReportsData();
-
-    //Initilize Current Data
-    let n =  new Date();
-    let y = n.getFullYear();
-    let m = n.getMonth() + 1;
-    let d = n.getDate();
-    this.setState({
-      durationValue:m + "/" + d + "/" + y
-    }) 
+    componentDidMount() {
+        // Initilization
+        this.getWhatsNoData();
+        this.getTemplateNameData();
+        this.getInterpriseIdData();
+        this.getReportsData();
     }
 
     // Fatching Data from the server
     getWhatsNoData = () => {
         ReportsService.getWhatsAppNumbers().then((r) => {
-            this.whatsAppNoData = r;
+            this.setState({ whatsAppNoData: r })
         }).catch((err) => { console.log("Err", err); })
     }
 
     getTemplateNameData = () => {
         ReportsService.getTemplateNames().then((r) => {
-            this.templateNameData = r;
+            this.setState({ templateNameData: r })
         }).catch((err) => { console.log("Err", err); })
     }
 
     getInterpriseIdData = () => {
         ReportsService.getInterpriseIds().then((r) => {
-            this.interpriseData = r;
+            this.setState({ interpriseData: r });
         }).catch((err) => { console.log("Err", err); })
     }
 
-    getReportsData = () =>{
+    getReportsData = () => {
         let collectGridData = []
         ReportsService.getReports().then((r) => {
-        const reports = r.reports
-        const grossReports = r.grossReport
-        collectGridData = [...collectGridData, new GrossModel(grossReports)]
-        for (let i = 0; i < reports.length; i++) {
-            const reportObj = reports[i];
-        collectGridData = [...collectGridData, new ReportsModel(reportObj)] 
-        }
-        this.reportsData = collectGridData
-        this.initilizeGrid(collectGridData)
+            const reports = r.reports
+            const grossReports = r.grossReport
+            collectGridData = [...collectGridData, new GrossModel(grossReports)]
+            for (let i = 0; i < reports.length; i++) {
+                const reportObj = reports[i];
+                collectGridData = [...collectGridData, new ReportsModel(reportObj)]
+            }
+            this.reportsData = collectGridData
+            this.initilizeGrid(collectGridData)
         }).catch((err) => { console.log("Err", err); })
     }
 
-    initilizeGrid = (data) =>{
-      let gridRows =  new CreateRows4Grid(data);
-      this.setState({
-        reportDataRows:gridRows.slice(1),
-        grossDataArr:[data[0]]
-          })                 
+    initilizeGrid = (data) => {
+        let gridRows = CreateRows4Grid(data.slice(1), getCurrentData(), this.state.displayNoOfrows);
+        this.setState({
+            reportDataRows: gridRows,
+            grossDataArr: [data[0]]
+        })
     }
 
-// Selectbox Filter
+    // Selectbox Filter
     ddSearchFilter = (event, id) => {
         let inputValue = event.target.value.toUpperCase();
         let div = document.getElementById(id);
@@ -109,7 +101,7 @@ export class ReportPage extends Component {
         filterDDItems(inputValue, HtmlItemsArr)
     }
 
-// Get value from Selectbox & Datepicker value
+    // Get value from Selectbox & Datepicker value
     handelWhatsAppNo = (value) => {
         console.log("selectedItem", value);
         this.setState({ whatsAppNoValue: value.text })
@@ -126,25 +118,47 @@ export class ReportPage extends Component {
     }
 
     handelDatePicker = (event) => {
-        this.setState({ durationValue: event.target.value })
-        console.log("event", event.target.value);
+        document.getElementById("initialDate").style.display = 'none';
+        let date = (event.target.value).split('-');
+        let d = date[2];
+        let m = date[1];
+        let y = date[0];
+        this.setState({ durationValue: d + "-" + m + "-" + y })
     }
 
     handelSearchBtn = () => {
-        console.log(this.state.whatsAppNoValue);
-        console.log(this.state.templateNameValue);
-        console.log(this.state.interpriseValue);
-        console.log(this.state.durationValue);
-        console.log(this.state.displayNoOfrows);
-        console.log(this.reportsData.splice(1));
+        let filterBy = {
+            whatsAppNo: this.state.whatsAppNoValue,
+            tempName: this.state.templateNameValue,
+            interId: this.state.interpriseValue,
+            durat: this.state.durationValue,
+            noOfrows: this.state.displayNoOfrows
+        }
+        let data = this.reportsData
+        // console.log("Super data", data, filterBy);
+        filterGrid(this, filterBy, data.slice(1), this.filterGridCb)
     }
 
-    handelNoOfRows = (e) =>{
-        console.log("event", e.target.value);
-        this.setState({displayNoOfrows: e.target.value,})
+
+    filterGridCb = (that, result) => {
+        // console.log("ssss", result);
+        that.setState({
+            reportDataRows: result
+        })
     }
 
-    // Filter Section Hover Animation
+    handelNoOfRows = (e) => {
+        console.log("event", e.target.value,);
+        let value = e.target.value
+        let currentGridLength = this.state.reportDataRows.length - 1
+        this.setState({ displayNoOfrows: e.target.value, }, () => {
+            if (currentGridLength !== value) {
+                this.handelSearchBtn()
+            }
+        })
+    }
+
+    // Events, 'Filter Section' Hover Animation
     mouseOverOnFilterSec = () => {
         this.setState({
             whatsAppNoCol: false,
@@ -165,18 +179,18 @@ export class ReportPage extends Component {
         let pages = header.getElementsByClassName("pagi");
 
         switch (value) {
-            case '1': 
-            break;
-            case '2':   
-            break;
-            case '3':   
-            break;
-            case '12':   
-            break;
-           
+            case '1':
+                break;
+            case '2':
+                break;
+            case '3':
+                break;
+            case '12':
+                break;
+
         }
-        ActivePage(pages,'pagiActive') 
-       
+        ActivePage(pages, 'pagiActive')
+
     }
 
 
@@ -204,7 +218,7 @@ export class ReportPage extends Component {
                                         </DropdownItem>
                                         <DropdownItem divider />
                                         <CreateDDItem id="customMenuItems4Inter"
-                                            data={this.interpriseData} selectedItem={this.handelEnterpriseIds} />
+                                            data={this.state.interpriseData} selectedItem={this.handelEnterpriseIds} />
                                     </DropdownMenu>
                                 </Dropdown>
                             </FormGroup>
@@ -222,7 +236,7 @@ export class ReportPage extends Component {
                                         </DropdownItem>
                                         <DropdownItem divider />
                                         <CreateDDItem id="customMenuItems4Wats"
-                                            data={this.whatsAppNoData} selectedItem={this.handelWhatsAppNo} />
+                                            data={this.state.whatsAppNoData} selectedItem={this.handelWhatsAppNo} />
                                     </DropdownMenu>
                                 </Dropdown>
                             </FormGroup>
@@ -240,16 +254,17 @@ export class ReportPage extends Component {
                                         </DropdownItem>
                                         <DropdownItem divider />
                                         <CreateDDItem id="customMenuItems4Tem"
-                                            data={this.templateNameData} selectedItem={this.handelTemplateName} />
+                                            data={this.state.templateNameData} selectedItem={this.handelTemplateName} />
                                     </DropdownMenu>
                                 </Dropdown>
                             </FormGroup>
                         </Col>
                         <Col sm='12' md='3'>
-                            <FormGroup>
+                            <FormGroup>                        
                                 <Label for="duration">Duration</Label>
                                 <Input className="durationSelect"
                                     onChange={this.handelDatePicker} type="date" bsSize="sm" name="date" id="durationId" />
+                                    <div id="initialDate">{this.state.durationValue}</div>
                             </FormGroup>
                         </Col>
                         <Col sm='12' md='2'>
@@ -285,30 +300,32 @@ export class ReportPage extends Component {
                                 <th>Unique Users</th>
                             </tr>
                             <tr className="totalCalcuRow">
-                            {/* Gross(Total) Report */}
-                            {grossData.map((v,i)=>{return(
-                            <React.Fragment key="thth">
-                            <th>{v.interpriseId}</th>
-                            <th>{v.notification.submitted}</th>
-                            <th>{v.notification.read}</th>
-                            <th>{v.notification.uniqueUser}</th>
-                            <th>{v.conversations.requests}</th>
-                            <th>{v.conversations.responsive}</th>
-                            <th>{v.conversations.uniqueUser}</th>
-                            </React.Fragment>
-                            )})}
+                                {/* Gross(Total) Report */}
+                                {grossData.map((v, i) => {
+                                    return (
+                                        <React.Fragment key="thth">
+                                            <th>{v.interpriseId}</th>
+                                            <th>{v.notification.submitted}</th>
+                                            <th>{v.notification.read}</th>
+                                            <th>{v.notification.uniqueUser}</th>
+                                            <th>{v.conversations.requests}</th>
+                                            <th>{v.conversations.responsive}</th>
+                                            <th>{v.conversations.uniqueUser}</th>
+                                        </React.Fragment>
+                                    )
+                                })}
                             </tr>
                         </thead>
                         <tbody>
-                        {/* Report Data */}
-                        {this.state.reportDataRows}
+                            {/* Report Data */}
+                            {this.state.reportDataRows}
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colSpan='3' style={{ borderWidth: 0 }} >
                                     <div style={{ display: 'flex' }}>
                                         <span>Show</span>&nbsp;
-                                        <select className="form-control form-control-sm" onChange={this.handelNoOfRows}>
+                                        <select className="form-control form-control-sm" style={{ width: 'auto' }} onChange={this.handelNoOfRows}>
                                             <option defaultValue value="5">5</option>
                                             <option value="10">10</option>
                                             <option value="15">15</option>
@@ -319,13 +336,13 @@ export class ReportPage extends Component {
                                 <td colSpan='4' style={{ borderWidth: 0, position: 'relative' }}>
                                     <div className="paginate" id="paginationContId">
                                         <div className="pages">
-                                            <div className="pagi" onClick={(e)=>this.paginateThisPage('<')}>{'<'}</div>
-                                            <div className="pagi pagiActive" onClick={(e)=>this.paginateThisPage('1')}>1</div>
-                                            <div className="pagi" onClick={(e)=>this.paginateThisPage('2')}>2</div>
-                                            <div className="pagi" onClick={(e)=>this.paginateThisPage('3')}>3</div>
-                                            <div className="pagi" onClick={(e)=>this.paginateThisPage('...')}>...</div>
-                                            <div className="pagi" onClick={(e)=>this.paginateThisPage('12')}>12</div>
-                                            <div className="pagi" onClick={(e)=>this.paginateThisPage('>')}>{'>'}</div>
+                                            <div className="pagi" onClick={(e) => this.paginateThisPage('<')}>{'<'}</div>
+                                            <div className="pagi pagiActive" onClick={(e) => this.paginateThisPage('1')}>1</div>
+                                            <div className="pagi" onClick={(e) => this.paginateThisPage('2')}>2</div>
+                                            <div className="pagi" onClick={(e) => this.paginateThisPage('3')}>3</div>
+                                            <div className="pagi" onClick={(e) => this.paginateThisPage('...')}>...</div>
+                                            <div className="pagi" onClick={(e) => this.paginateThisPage('12')}>12</div>
+                                            <div className="pagi" onClick={(e) => this.paginateThisPage('>')}>{'>'}</div>
                                         </div>
                                     </div>
                                 </td>

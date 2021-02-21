@@ -29,15 +29,25 @@ font-size: 14px;
 margin-top: 2.0rem !important;
 }
 
-.durationSelect{
+.durationSelect {
     color: #000;
     text-align: left;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 8px #00000029;
     border: 1px solid #E1E1E1;
     border-radius: 2px;
+    position: relative;
 }
 
+#initialDate {
+    position: absolute;
+    font-size: 14px;
+    top: 36px;
+    left: 25px;
+    background-color: #fff;
+    padding: 0px 11px 0 0;
+    display: block;
+}
 
 .interpriseIdSelect{
     color: #000;
@@ -128,10 +138,6 @@ td[colspan="7"]{
   font-weight: bold;
 }
 
-.form-control {
-    width: auto;
-}
-
 .pagi{
     display: inline-block;
     width: 30px;
@@ -158,4 +164,5 @@ position: absolute;
 right: 15px;
 bottom: 7px;
 }
+
 

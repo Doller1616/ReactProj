@@ -1,12 +1,13 @@
 {
     "data": [
-        {"text":"Template one","id":11},
-        {"text":"Template two","id":22},
-        {"text":"Template three","id":33},
-        {"text":"Template four","id":44},
-        {"text":"Template five","id":55},
-        {"text":"Template six","id":66},
-        {"text":"Template seven","id":77},
-        {"text":"Template eight","id":88}
+        {"text":"All","id":0},
+        {"text":"Template 1","id":11},
+        {"text":"Template 2","id":22},
+        {"text":"Template 3","id":33},
+        {"text":"Template 4","id":44},
+        {"text":"Template 5","id":55},
+        {"text":"Template 6","id":66},
+        {"text":"Template 7","id":77},
+        {"text":"Template 8","id":88}
     ]
 }
