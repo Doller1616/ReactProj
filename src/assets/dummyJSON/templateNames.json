@@ -5,9 +5,6 @@
         {"text":"Template 2","id":22},
         {"text":"Template 3","id":33},
         {"text":"Template 4","id":44},
-        {"text":"Template 5","id":55},
-        {"text":"Template 6","id":66},
-        {"text":"Template 7","id":77},
-        {"text":"Template 8","id":88}
+        {"text":"Template 5","id":55}
     ]
 }

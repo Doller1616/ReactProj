@@ -17,17 +17,16 @@ export function filterGrid(that, filterBy, dataArr, filterGridCb) {
   let { whatsAppNo, tempName, interId, durat, noOfrows } = filterBy
   let collectHtmlRows = []
 
-  console.log("dataArr",dataArr);
+  // console.log("dataArr",dataArr);
 
   collectHtmlRows = dataArr.reduce((preVal, data, i) => {
 
     let whatsAppNoflag = whatsAppNo === "All" ? true : (whatsAppNo === data.whatsAppNo ? true : false);
     let tempNameflag = tempName === "All" ? true : (tempName === data.template ? true : false)
     let interIdflag = interId === "All" ? true : (interId === data.interpriseId ? true : false)
-    let duratflag = durat === data.duration ? true : false;
+    let duratflag = durat === "DD-MM-YYYY" ? true : (durat === data.duration ? true : false);
     let limit = preVal.length < noOfrows
-    console.log("ccccc",interId,"--",data.interpriseId);
-    console.log(interIdflag , whatsAppNoflag , tempNameflag , duratflag,limit,preVal.length, '<', noOfrows,dataArr.length);
+    // console.log(interIdflag , whatsAppNoflag , tempNameflag , duratflag,limit,preVal.length, '<', noOfrows,dataArr.length);
     return (interIdflag && whatsAppNoflag && tempNameflag && duratflag && limit ?
     [...preVal, <tr key={'grid' + i}>
       <td>{data.interpriseId}</td>
@@ -39,33 +38,6 @@ export function filterGrid(that, filterBy, dataArr, filterGridCb) {
       <td>{data.conversations.uniqueUser}</td>
     </tr>] : preVal)
   }, [])
-
-  
-//   for (let i = 0; i < dataArr.length; i++) {
-//     const data = dataArr[i];
-   
-//     let whatsAppNoflag = whatsAppNo === "All" ? true : whatsAppNo == data.whatsAppNo ? true : false;
-//     let tempNameflag = tempName === "All" ? true : tempName === data.template ? true : false
-//     let interIdflag = interId === "All" ? true : interId === data.interpriseId ? true : false
-//     let duratflag = durat === data.duration ? true : false;
-//     let limit = collectHtmlRows.length < noOfrows
-
-//     console.log(interIdflag , whatsAppNoflag , tempNameflag , duratflag,"ooo",limit,dataArr.length);
-// if(interIdflag === true && whatsAppNoflag === true && tempNameflag === true && duratflag === true){
-
-//    collectHtmlRows = [...collectHtmlRows, <tr key={'grid' + i}>
-//       <td>{data.interpriseId}</td>
-//       <td>{data.notification.submitted}</td>
-//       <td>{data.notification.read}</td>
-//       <td>{data.notification.uniqueUser}</td>
-//       <td>{data.conversations.requests}</td>
-//       <td>{data.conversations.responsive}</td>
-//       <td>{data.conversations.uniqueUser}</td>
-//     </tr>]
-//     }
-//   }
-
-
 
   return filterGridCb(that, collectHtmlRows)
 

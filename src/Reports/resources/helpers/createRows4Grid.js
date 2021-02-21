@@ -4,7 +4,7 @@ export function CreateRows4Grid(dataArr, currentDate, rowLimit) {
     let collectRows = []
     collectRows = dataArr.reduce((preVal, data, i) => {
         let limit = (preVal.length) < rowLimit
-        console.log("Initilize",currentDate , data.duration,limit,preVal.length,"<",rowLimit);
+        // console.log("Initilize",currentDate , data.duration,limit,preVal.length,"<",rowLimit);
         return (currentDate == data.duration  && limit ?
             [...preVal, <tr key={'grid' + i}>
                 <td>{data.interpriseId}</td>

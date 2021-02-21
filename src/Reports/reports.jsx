@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
-    Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle,FormGroup, Input, Label, Row, Table} from 'reactstrap'
+    Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Label, Row, Table
+} from 'reactstrap'
 import { CreateDDItem } from './resources/helpers/createDDItem'
 import './resources/reports.css'
 import { ReportsService } from './service/reportsService'
@@ -118,7 +119,6 @@ export class ReportPage extends Component {
     }
 
     handelDatePicker = (event) => {
-        document.getElementById("initialDate").style.display = 'none';
         let date = (event.target.value).split('-');
         let d = date[2];
         let m = date[1];
@@ -135,13 +135,12 @@ export class ReportPage extends Component {
             noOfrows: this.state.displayNoOfrows
         }
         let data = this.reportsData
-        // console.log("Super data", data, filterBy);
         filterGrid(this, filterBy, data.slice(1), this.filterGridCb)
     }
 
 
     filterGridCb = (that, result) => {
-        // console.log("ssss", result);
+        // console.log("result",result);
         that.setState({
             reportDataRows: result
         })
@@ -173,23 +172,42 @@ export class ReportPage extends Component {
         })
     }
 
+    pageFrom = 0
+    pageTo = 0
     // Grid Pagination
     paginateThisPage = (value) => {
         let header = document.getElementById("paginationContId");
         let pages = header.getElementsByClassName("pagi");
-
-        switch (value) {
-            case '1':
-                break;
-            case '2':
-                break;
-            case '3':
-                break;
-            case '12':
-                break;
-
-        }
+        let noOfRows = this.state.displayNoOfrows;
         ActivePage(pages, 'pagiActive')
+
+        this.pageFrom = this.pageTo;
+        this.pageTo = ((value - 1) * noOfRows) + 1;
+        let data = [];
+        if(this.pageFrom !== this.pageTo){
+            data = this.reportsData.slice(this.pageFrom, this.pageTo)
+            console.log("XSXS", data,this.pageFrom , this.pageTo );
+
+            let filterBy = {
+                whatsAppNo: this.state.whatsAppNoValue,
+                tempName: this.state.templateNameValue,
+                interId: this.state.interpriseValue,
+                durat: this.state.durationValue,
+                noOfrows: this.state.displayNoOfrows
+            }
+
+            // this.setState({
+            //     whatsAppNoValue:"All",
+            //     templateNameValue:"All",
+            //     interpriseValue:"All",
+            //     durationValue:"DD-MM-YYYY"
+            // })
+            
+            filterGrid(this, filterBy, data, this.filterGridCb)           
+           
+        }
+        
+       
 
     }
 
@@ -260,11 +278,11 @@ export class ReportPage extends Component {
                             </FormGroup>
                         </Col>
                         <Col sm='12' md='3'>
-                            <FormGroup>                        
+                            <FormGroup>
                                 <Label for="duration">Duration</Label>
                                 <Input className="durationSelect"
                                     onChange={this.handelDatePicker} type="date" bsSize="sm" name="date" id="durationId" />
-                                    <div id="initialDate">{this.state.durationValue}</div>
+                                <div id="initialDate">{this.state.durationValue}</div>
                             </FormGroup>
                         </Col>
                         <Col sm='12' md='2'>

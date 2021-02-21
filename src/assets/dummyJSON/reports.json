@@ -58,9 +58,9 @@
                 "template": "Template 2",
                 "duration": "22-02-2021",
                 "notification": {
-                    "submitted": "1200",
-                    "read": "1070",
-                    "uniqueUser": "23410"
+                    "submitted": "5555",
+                    "read": "6666",
+                    "uniqueUser": "55"
                 },
                 "conversations": {
                     "requests": "3200",
